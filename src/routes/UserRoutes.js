@@ -14,11 +14,10 @@ router.post('/', async (req,res)=>{
             email,
             password,
         defaultShippingAddress,
-        billingAddress,
-        
-        
+        billingAddress,        
     })  
-    res.send(`User created ${newUser}`);
+
+    res.send(newUser);
 } catch(err){
     console.log(err);
     res.status(500).send('User cannot be created')
