@@ -10,14 +10,14 @@ const router = Router();
 
 
 router.post("/create", async (req, res) => {
-    const { name, model, brand, descriptions, thumbnail, price } = req.body;
+    const { name, model, brand, description, thumbnail, price } = req.body;
     console.log(req.body);
     try{
         const newProduct = await Product.create({
             name,
             model,
             brand,
-            descriptions,
+            description,
             thumbnail,
             price     
     })  
