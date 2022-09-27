@@ -23,4 +23,14 @@ router.post('/create', async (req,res)=>{
     res.status(500).send('User cannot be created')
 }
 })
+
+router.get('/', async (req,res)=>{
+    try{
+        const users = await User.findAll()
+        return res.send(users);
+    } catch(err){
+        res.status(500).send(err);
+    }
+})
+
 module.exports = router;
