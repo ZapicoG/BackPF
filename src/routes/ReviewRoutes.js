@@ -11,9 +11,12 @@ router.post("/add", async (req, res) => {
     const { productId, userUserName, description, stars } = req.body;
     try {
         console.log(1, req.body)
-        const review = await Review.create({productId: productId, userUserName: userUserName, description: description, stars: stars});
+        // const review = await Review.create({productId: productId, userUserName: userUserName, description: description, stars: stars});
+        const user = await User.findByPk(userUserName);
+        const product = await Product.findByPk(productId);
+        await user.addProduct(product, { through: {description: description, stars: stars}})
         console.log(2)
-        res.send(review)
+        res.send("Review added")
     } catch (err) {
         res.send(500).send({error: err.message})
     }
