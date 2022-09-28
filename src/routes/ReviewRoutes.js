@@ -60,6 +60,18 @@ router.put("/modify", async (req, res) => {
 });
 
 
+router.put("/hideReview", async (req, res) => {
+    const { productId, userName } = req.body;
+    try {
+        const review = await Product.findOne({where: { productId: productId, userName: userName}});
+        review.update({hidden: true});
+        await review.save();
+        res.send("Review hidden");
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+})
+
 
 
 
@@ -67,5 +79,5 @@ router.put("/modify", async (req, res) => {
 
 // Crear ruta para crear/agregar Review listo
 // Crear Ruta para obtener todas las reviews de un producto. listo
-// Crear ruta para Modificar Review
+// Crear ruta para Modificar Review listo
 // Crear Ruta para eliminar Review
