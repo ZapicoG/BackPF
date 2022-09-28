@@ -34,13 +34,16 @@ router.put("/modify", async (req, res) => {
     // console.log(req.body)
     const { id, name, model, brand, description, thumbnail, price } = req.body;
     console.log(req.body)
-    try{
-        const product = await Product.findByPk(id);
-        product.set(req.body)
-        product.save()
-        res.send(product);
-    } catch (err) {
-        res.status(500).send({error: err.message})
+    try{ 
+        Product.update(
+            { name, model, brand, description, thumbnail, price},
+            {
+                where: {id: id}
+            }
+        )
+        return res.send(Product);
+    } catch(err){
+        return res.status(400).send(err);
     }
 });
 
