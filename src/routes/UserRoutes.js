@@ -33,4 +33,19 @@ router.get('/', async (req,res)=>{
     }
 })
 
+router.put('/modify', async(req,res)=>{
+    const { role, userName, email, password, defaultShippingAddress, billingAddress, banned } = req.body;
+    try{ 
+        User.update(
+            { role, userName, email, password, defaultShippingAddress, billingAddress, banned },
+            {
+                where: {userName: userName}
+            }
+        )
+        return res.send('User Updated');
+    } catch(err){
+        return res.status(400).send(err);
+    }
+})
+
 module.exports = router;
