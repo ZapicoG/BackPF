@@ -89,7 +89,8 @@ router.get("/byCategory/:category", async (req, res) => {
             required: true,
             where: {
                 name: category
-            }
+            },
+            through: { attributes: []}
         }});
         res.send(products);
     } catch (err) {
