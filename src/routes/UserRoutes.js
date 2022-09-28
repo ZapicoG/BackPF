@@ -33,6 +33,9 @@ router.get('/', async (req,res)=>{
     }
 })
 
+
+// Cualquier llamada a esta ruta no puede tener un valor como null
+// Puede tener valores que no se manden pero nunca que mandes {key: null}
 router.put('/modify', async(req,res)=>{
     const { role, userName, email, password, defaultShippingAddress, billingAddress, banned } = req.body;
     try{ 
