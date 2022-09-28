@@ -47,13 +47,13 @@ router.put("/modify", async (req, res) => {
     const { productId, userName, description, stars } = req.body;
     // console.log(req.body)
     try { 
-        Product.update(
+        Review.update(
             { userName, productId, description, stars},
             {
                 where: {productId: productId, userName: userName}
             }
         )
-        return res.send("Producto modificado");
+        return res.send("Review modificada");
     } catch(err){
         return res.status(400).send({error: err.message});
     }
