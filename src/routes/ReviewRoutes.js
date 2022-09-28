@@ -12,7 +12,7 @@ router.post("/add", async (req, res) => {
     try {
         console.log(1, req.body)
         // const review = await Review.create({productId: productId, userName: userName, description: description, stars: stars});
-        const user = await User.findByPk(userName);
+        const user = await User.findOne({where: { userName: userName}});
         const product = await Product.findByPk(productId);
         console.log(2, user, product)
         await user.addProduct(product, { through: { description: description, stars: stars } })
