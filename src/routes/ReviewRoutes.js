@@ -3,6 +3,7 @@ const { Op } = require("sequelize")
 const axios = require("axios");
 const { User, Cart, Category, Color, Image, Order, Product, Review, conn, ProductCategory} = require('../db'); 
 const router = Router();
+module.exports = router;
 
 
 
