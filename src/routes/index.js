@@ -2,8 +2,8 @@ const { Router } = require('express');
 
 const UserRoutes = require ('./UserRoutes.js');
 const ProductRoutes = require('./ProductRoutes.js');
-const CategoryRoutes = require("./CategoryRoutes.js");
-const ReviewRoutes = require("./ReviewRoutes.js");
+// const CategoryRoutes = require("./CategoryRoutes.js");
+// const ReviewRoutes = require("./ReviewRoutes.js");
 
 
 const router = Router();
@@ -16,8 +16,8 @@ router.get("/", (req, res) => {
 
 router.use('/user', UserRoutes)
 router.use('/product', ProductRoutes)
-router.use('/category', CategoryRoutes)
-router.use('/review', ReviewRoutes)
+// router.use('/category', CategoryRoutes)
+// router.use('/review', ReviewRoutes)
 
 
 /* 
