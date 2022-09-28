@@ -29,7 +29,7 @@ router.get('/', async (req,res)=>{
         const users = await User.findAll()
         return res.send(users);
     } catch(err){
-        res.status(500).send(err);
+        res.status(500).send({error: err.message});
     }
 })
 
@@ -47,7 +47,7 @@ router.put('/modify', async(req,res)=>{
         )
         return res.send('User Updated');
     } catch(err){
-        return res.status(400).send(err);
+        return res.status(400).send({error: err.message});
     }
 })
 

@@ -45,7 +45,7 @@ router.put("/modify", async (req, res) => {
         )
         return res.send("Producto modificado");
     } catch(err){
-        return res.status(400).send(err);
+        return res.status(400).send({error: err.message});
     }
 });
 
