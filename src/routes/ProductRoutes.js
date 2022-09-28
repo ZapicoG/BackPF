@@ -30,9 +30,9 @@ router.post("/create", async (req, res) => {
 });
 
 
-router.put("/hide", async (res, req) => {
-    console.log(req.body)
-    const { id } =req.body;
+router.put("/hide", async (req, res) => {
+    // console.log(req.body)
+    const { id } = req.body;
     try{
         const product = await Product.findByPk(id);
         product.set({hidden: true})
