@@ -6,7 +6,7 @@ const axios = require("axios");
 
 router.post('/create', async (req,res)=>{
     const { role, userName, email, password, defaultShippingAddress, billingAddress } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     try{
         const newUser = await User.create({
             role,
@@ -19,8 +19,8 @@ router.post('/create', async (req,res)=>{
 
     res.send(newUser);
 } catch(err){
-    console.log(err);
-    res.status(500).send('User cannot be created')
+    // console.log(err);
+    res.status(500).send({error: err.message})
 }
 })
 
@@ -33,6 +33,9 @@ router.get('/', async (req,res)=>{
     }
 })
 
+
+// Cualquier llamada a esta ruta no puede tener un valor como null
+// Puede tener valores que no se manden pero nunca que mandes {key: null}
 router.put('/modify', async(req,res)=>{
     const { role, userName, email, password, defaultShippingAddress, billingAddress, banned } = req.body;
     try{ 
@@ -45,6 +48,7 @@ router.put('/modify', async(req,res)=>{
         return res.send('User Updated');
     } catch(err){
         return res.status(400).send({error: err.message});
+<<<<<<< HEAD
     }
 })
 
@@ -60,6 +64,8 @@ router.put('/delete/:username', async(req,res)=>{
         return res.send('User Banned');
     } catch(err){
         return res.status(400).send({error: err.message});
+=======
+>>>>>>> 92a869ee2f5b038458eac3619a35ada973ef7300
     }
 })
 
