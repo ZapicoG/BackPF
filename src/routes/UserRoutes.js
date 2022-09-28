@@ -48,12 +48,11 @@ router.put('/modify', async(req,res)=>{
         return res.send('User Updated');
     } catch(err){
         return res.status(400).send({error: err.message});
-<<<<<<< HEAD
     }
 })
 
 router.put('/delete/:username', async(req,res)=>{
-    const userName  = req.params.id;
+    const userName  = req.params.username;
     try{ 
         User.update(
             { banned:true },
@@ -64,8 +63,6 @@ router.put('/delete/:username', async(req,res)=>{
         return res.send('User Banned');
     } catch(err){
         return res.status(400).send({error: err.message});
-=======
->>>>>>> 92a869ee2f5b038458eac3619a35ada973ef7300
     }
 })
 
