@@ -20,6 +20,17 @@ router.post("/add", async (req, res) => {
     } catch (err) {
         res.status(500).send({error: err.message})
     }
+});
+
+
+router.get("/ID/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const reviews = await Review.findAll({ where: { productId: id}})
+        res.send(reviews);
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
 })
 
 
@@ -28,7 +39,7 @@ router.post("/add", async (req, res) => {
 
 
 
-// Crear ruta para crear/agregar Review
+// Crear ruta para crear/agregar Review listo
 // Crear Ruta para obtener todas las reviews de un producto.
 // Crear ruta para Modificar Review
 // Crear Ruta para eliminar Review
