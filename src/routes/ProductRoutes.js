@@ -36,12 +36,12 @@ router.put("/modify", async (req, res) => {
     console.log(req.body)
     try{ 
         Product.update(
-            { name, model, brand, description, thumbnail, price},
+            { name, model, brand, description, thumbnail, price },
             {
                 where: {id: id}
             }
         )
-        return res.send(Product);
+        return res.send("Producto modificado");
     } catch(err){
         return res.status(400).send(err);
     }
