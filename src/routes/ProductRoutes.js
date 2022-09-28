@@ -98,10 +98,10 @@ router.get("/byCategory/:category", async (req, res) => {
     }
 });
 
-router.get("/ID/:ID", async (req, res) => {
-    const { ID } = req.params;
+router.get("/ID/:id", async (req, res) => {
+    const { id } = req.params;
     try {
-        const product = await Product.findByPk(ID, {include: {model: Category, through: { attributes: []}}})
+        const product = await Product.findByPk(id, {include: {model: Category, through: { attributes: []}}})
         res.send(product)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -110,9 +110,9 @@ router.get("/ID/:ID", async (req, res) => {
 
 
 router.delete("/deleteCategory", async (req, res) => {
-    const { ID, categoryName } = req.body;
+    const { id, categoryName } = req.body;
     try {
-        const product = await Product.findByPk(ID);
+        const product = await Product.findByPk(id);
         const category = await Category.findByPk(categoryName);
         await product.removeCategory(category);
         res.send("Category removed from product")
