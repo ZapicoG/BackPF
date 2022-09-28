@@ -71,11 +71,27 @@ Product.belongsToMany(User, {
 
 
 
-User.belongsToMany(Product, {through: Cart})
-Product.belongsToMany(User, {through: Cart})
+User.belongsToMany(Product, {
+  through: Cart,
+  foreignKey: "productId",
+  otherKey: "userName"
+})
+Product.belongsToMany(User, {
+  through: Cart,
+  foreignKey: "productId",
+  otherKey: "userName"
+})
 
-User.belongsToMany(Product, {through: Order})
-Product.belongsToMany(User, {through: Order})
+User.belongsToMany(Product, {
+  through: Order,
+  foreignKey: "productId",
+  otherKey: "userName"
+})
+Product.belongsToMany(User, {
+  through: Order,
+  foreignKey: "productId",
+  otherKey: "userName"
+})
 
 
 
