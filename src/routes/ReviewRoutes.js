@@ -19,7 +19,7 @@ router.post("/add", async (req, res) => {
         console.log(3)
         res.send("Review added")
     } catch (err) {
-        res.send(500).send({error: err.message})
+        res.status(500).send({error: err.message})
     }
 })
 
