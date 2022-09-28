@@ -8,10 +8,10 @@ module.exports = router;
 
 
 router.post("/add", async (req, res) => {
-    const { productId, userUserName, description, stars } = req.body;
+    const { productId, userName, description, stars } = req.body;
     try {
         console.log(1, req.body)
-        const review = await Review.create({productId: productId, userUserName: userUserName, description: description, stars: stars});
+        const review = await Review.create({productId: productId, userName: userName, description: description, stars: stars});
         // const user = await User.findByPk(userUserName);
         // const product = await Product.findByPk(productId);
         // console.log(2, user, product)
