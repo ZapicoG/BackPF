@@ -38,9 +38,10 @@ router.put("/modify", async (req, res) => {
         const product = await Product.findByPk(id);
 
         for (param of paramsToChange) {
+            console.log(param)
             if (!param) product.update({param})
+            product.save()
         }
-        product.save()
         res.send(product);
     } catch (err) {
         res.status(500).send({error: err.message})
