@@ -86,16 +86,26 @@ router.get("/byCategory/:category", async (req, res) => {
     } catch (err) {
         res.status(500).send({error: err.message})
     }
+});
 
+router.get("/ID/:ID", async (req, res) => {
+    const { ID } = req.params;
+    try {
+        const product = await Product.findByPk(ID, {include: {model: Category}})
+        res.send(product)
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
 })
+
 
 
 // Crear ruta para crear/agregar Producto listo
 //     Crear ruta para Modificar Producto listo
 //     Crear ruta para ocultar producto listo
 //     Crear ruta que devuelva todos los productos listo
-//     Crear Ruta que devuelva los productos de X categoria
-//     Crear ruta de producto individual, pasado un ID que retorne un producto con sus detalles
+//     Crear Ruta que devuelva los productos de X categoria listo
+//     Crear ruta de producto individual, pasado un ID que retorne un producto con sus detalles listo
 
 
 module.exports = router;
