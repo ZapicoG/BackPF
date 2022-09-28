@@ -33,13 +33,12 @@ router.post("/create", async (req, res) => {
 router.put("/modify", async (req, res) => {
     // console.log(req.body)
     const { id, name, model, brand, description, thumbnail, price } = req.body;
-    const paramsToChange = [name, model, brand, description, thumbnail, price];
+    console.log(req.body)
     try{
         const product = await Product.findByPk(id);
-
-        for (param of paramsToChange) {
-            console.log([param])
-            if (!param) product.update({[param]: param})
+        console.log(param)
+        for (param of req.body) {
+            if (!param) product.update({param})  // {paramName: param}
             product.save()
         }
         res.send(product);
