@@ -74,7 +74,7 @@ router.put("/hide", async (req, res) => {
 
 router.get("/all", async (req, res) => {
     try {
-        const products = await Product.findAll();
+        const products = await Product.findAll({include: Category});
         res.send(products)
     } catch (err) {
         res.status(500).send({error: err.message})
