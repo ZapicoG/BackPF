@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { Op } = require("sequelize")
 const axios = require("axios");
-const { User, Cart, Category, Color, Image, Orders, Product, Reviews, conn} = require('../db') 
+const { User, Cart, Category, Color, Image, Orders, Product, Reviews, conn} = require('../db'); 
 
 
 const router = Router();
@@ -9,7 +9,7 @@ const router = Router();
 
 
 router.post("/create", async (req, res) => {
-    const { name, model, brand, description, thumbnail, price } = req.body;
+    const { name, model, brand, description, thumbnail, price, categories } = req.body;
     // console.log(req.body);
     try {
         const newProduct = await Product.create({
@@ -20,7 +20,10 @@ router.post("/create", async (req, res) => {
             thumbnail,
             price     
     })  
-
+    for (let category of categories) {
+        let addCategory = Category.findOne({where: {name: category}})
+        await newProduct.addCategory(addCategory)
+    }
     res.send(newProduct);
 } catch (err) {
     // console.log(err);   
