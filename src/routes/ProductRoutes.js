@@ -2,11 +2,22 @@ const { Router } = require('express');
 const { Op } = require("sequelize")
 const axios = require("axios");
 const { User, Cart, Category, Color, Image, Orders, Product, Reviews, conn, ProductCategory} = require('../db'); 
+const { getApiProducts } = require("../controllers/controllersApi.js")
 
 
 const router = Router();
 
 
+
+
+router.get("/", async (req, res) => {
+    try {
+        const json = await getApiProducts();
+        return res.status(200).json(json);
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+});
 
 router.post("/create", async (req, res) => {
     const { name, model, brand, description, thumbnail, price, categories } = req.body;
