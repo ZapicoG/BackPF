@@ -19,11 +19,13 @@ router.post("/create", async (req, res) => {
             description,
             thumbnail,
             price     
-    })  
-    for (let category of categories) {
-        let addCategory = Category.findOne({where: {name: category}})
-        await newProduct.addCategory(addCategory)
-    }
+    }) 
+    if (categories.length) {
+        for (let category of categories) {
+            let addCategory = Category.findOne({where: {name: category}})
+            await newProduct.addCategory(addCategory)
+        }
+    } 
     res.send(newProduct);
 } catch (err) {
     // console.log(err);   
