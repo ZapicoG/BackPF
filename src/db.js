@@ -53,10 +53,18 @@ Color.belongsTo(Product)
 Product.hasMany(Image)
 Image.belongsTo(Product)
 
+
+
 //Relaciones muchos a muchos avanzadas
 
 User.belongsToMany(Product, {through: Review} )
 Product.belongsToMany(User, {through: Review})
+User.hasMany(Review)
+Review.belongsTo(User)
+Product.hasMany(Review)
+Review.belongsTo(Product)
+
+
 
 User.belongsToMany(Product, {through: Cart})
 Product.belongsToMany(User, {through: Cart})
