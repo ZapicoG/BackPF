@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { Op } = require("sequelize")
 const axios = require("axios");
-const { User, Cart, Category, Color, Image, Orders, Product, Reviews, conn} = require('../db'); 
+const { User, Cart, Category, Color, Image, Orders, Product, Reviews, conn, ProductCategory} = require('../db'); 
 
 
 const router = Router();
@@ -103,6 +103,19 @@ router.get("/ID/:ID", async (req, res) => {
     try {
         const product = await Product.findByPk(ID, {include: {model: Category, through: { attributes: []}}})
         res.send(product)
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+});
+
+
+router.delete("/deleteCategory", async (req, res) => {
+    const { ID, categoryName } = req.body;
+    try {
+        const product = await Product.findByPk(ID);
+        const category = await Category.findByPk(categoryName);
+        await product.removeCategory(category);
+        res.send("Category removed from product")
     } catch (err) {
         res.status(500).send({error: err.message})
     }
