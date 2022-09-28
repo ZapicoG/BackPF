@@ -36,7 +36,6 @@ router.put("/modify", async (req, res) => {
     console.log(req.body)
     try{
         const product = await Product.findByPk(id);
-        console.log(param)
         product.set(req.body)
         product.save()
         res.send(product);
