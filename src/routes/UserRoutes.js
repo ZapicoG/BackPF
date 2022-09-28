@@ -51,4 +51,20 @@ router.put('/modify', async(req,res)=>{
     }
 })
 
+router.put('/delete/:username', async(req,res)=>{
+    const userName  = req.params.username;
+    console.log(userName);
+    try{ 
+        User.update(
+            { banned:true },
+            {
+                where: {userName: userName}
+            }
+        )
+        return res.send('User Banned');
+    } catch(err){
+        return res.status(400).send({error: err.message});
+    }
+})
+
 module.exports = router;
