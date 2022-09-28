@@ -10,7 +10,7 @@ const router = Router();
 
 router.post("/create", async (req, res) => {
     const { name, model, brand, description, thumbnail, price, categories } = req.body;
-    // console.log(req.body);
+    // console.log(req.body);   
     try {
         const newProduct = await Product.create({
             name,
@@ -24,7 +24,7 @@ router.post("/create", async (req, res) => {
         console.log(1, newProduct, categories)
         for (let category of categories) {
             console.log(2, newProduct, category)
-            let addCategory = Category.findOne({where: {name: category}})
+            let addCategory = await Category.findOne({where: {name: category}})
             console.log(3, addCategory)
             await newProduct.addCategory(addCategory)
             console.log(4, newProduct)
