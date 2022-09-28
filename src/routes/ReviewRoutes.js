@@ -33,7 +33,7 @@ router.get("/ID/:id", async (req, res) => {
     }
 })
 
-route.get("/all", async (req, res) => {
+router.get("/all", async (req, res) => {
     try {
         const reviews = await Review.findAll();
         res.send(reviews)
