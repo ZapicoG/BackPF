@@ -11,7 +11,7 @@ const router = Router();
 
 router.post("/create", async (req, res) => {
     const { name, model, brand, description, thumbnail, price } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     try{
         const newProduct = await Product.create({
             name,
@@ -23,11 +23,25 @@ router.post("/create", async (req, res) => {
     })  
 
     res.send(newProduct);
-} catch(err){
-    console.log(err);   
+} catch (err) {
+    // console.log(err);   
     res.status(500).send({error: err.message})
 }
-})
+});
+
+
+router.put("/hide", async (res, req) => {
+    const { id } =req.body;
+    try{
+        const product = await Product.findByPk(id);
+        product.set({hidden: true})
+        res.send("Product hidden");
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+});
+
+
 
 // Crear ruta para crear/agregar Producto
 //     Crear ruta para Modificar Producto
