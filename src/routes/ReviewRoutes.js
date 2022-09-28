@@ -8,9 +8,11 @@ module.exports = router;
 
 
 router.post("/add", async (req, res) => {
-    const { id, userName, description, stars } = req.body;
+    const { productId, userUserName, description, stars } = req.body;
     try {
-        const review = await Review.create({productId: id, userUserName: userName, description: description, stars: stars});
+        console.log(1, req.body)
+        const review = await Review.create({productId: productId, userUserName: userUserName, description: description, stars: stars});
+        console.log(2)
         res.send(review)
     } catch (err) {
         res.send(500).send({error: err.message})
