@@ -41,12 +41,11 @@ router.post("/create", async (req, res) => {
 // Cualquier llamada a esta ruta no puede tener un valor como null
 // Puede tener valores que no se manden pero nunca que mandes {key: null}
 router.put("/modify", async (req, res) => {
-    // console.log(req.body)
     const { id, name, model, brand, description, thumbnail, price } = req.body;
-    console.log(req.body)
+    // console.log(req.body)
     try { 
         Product.update(
-            { name: name && name, model, brand, description, thumbnail, price },
+            { name, model, brand, description, thumbnail, price },
             {
                 where: {id: id}
             }
