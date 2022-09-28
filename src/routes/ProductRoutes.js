@@ -35,7 +35,8 @@ router.put("/hide", async (req, res) => {
     const { id } = req.body;
     try{
         const product = await Product.findByPk(id);
-        product.set({hidden: true})
+        product.set({hidden: true});
+        await product.save();
         res.send("Product hidden");
     } catch (err) {
         res.status(500).send({error: err.message})
