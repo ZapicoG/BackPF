@@ -15,14 +15,14 @@ router.get("/", async(req, res) => {
     }
 })
 
-router.put("/:id",async(req,res) => {
+router.put("/:name",async(req,res) => {
     try {
-        // me pasan el id de la categoria a modificar por params, y por body un obj con {name,icon}
+        // me pasan el name de la categoria a modificar por params, y por body un obj con {name,icon}
         // con la info actualizada
-        var {id} = req.params
+        var {name} = req.params
         await Category.update(req.body,{
             where: {
-                id 
+                name 
             }
         })
         res.send("Category update")
@@ -45,9 +45,9 @@ router.post("/",async(req,res) => {
 
 router.post("/product",async(req,res) => {
     try {
-        var {arrProductsIDs,id_category} = req.body
+        var {arrProductsIDs,name_category} = req.body
         // recibo un arreglo con los ids de los procuctos que le quiero agregar a la categoria
-        var category = await Category.findByPk(id_category)
+        var category = await Category.findByPk(name_category)
         await category.setProducts(arrProductsIDs)
         res.send(`${category.name} was associated to some products`)
     } catch (error) {
