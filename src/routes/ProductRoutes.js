@@ -123,7 +123,7 @@ router.get("/filterBy", async (req, res) => {
                 brand: {[Op.like]: `%${brand}%`},
                 model: {[Op.like]: `%${model}%`},
                 price: {[Op.between]: [minPrice, maxPrice]},
-                ...(category ? {name: category} : {})
+                ...(category ? {Category: {name: category}} : {})
             },});
         res.send(products);
     } catch (err) {
