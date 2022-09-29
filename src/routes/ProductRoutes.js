@@ -105,7 +105,7 @@ router.get("/filterBy", async (req, res) => {
     let { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
     if (!amount) amount = 10;
     if (!minPrice) minPrice = 0;
-    if (!maxPrice) maxPrice = Infinity;
+    if (!maxPrice) maxPrice = 100000000000;
     try {
         const products = await Product.findAll({
             order: [["price", order? order : "ASC"]],
