@@ -114,16 +114,17 @@ router.get("/filterBy", async (req, res) => {
             order: [["price", order? order : "ASC"]],
             offset: page * amount,
             limit: amount,
+            include: {
+                // where: (category ? {name : category} : {}),
+                model: Category,
+                through: { attributes: [] }
+            },
             where: {
                 brand: {[Op.like]: `%${brand}%`},
                 model: {[Op.like]: `%${model}%`},
-                price: {[Op.between]: [minPrice, maxPrice]}
-            },
-            include: {
-            model: Category,
-            // where: (category ? {name : category} : {}),
-            through: { attributes: [] }
-    }});
+                price: {[Op.between]: [minPrice, maxPrice]},
+                category: (category ? {name: category} : {})
+            },});
         res.send(products);
     } catch (err) {
         res.status(500).send({error: err.message})
