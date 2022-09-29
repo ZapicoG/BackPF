@@ -83,7 +83,9 @@ router.get("/all", async (req, res) => {
 router.get("/byCategory/:category", async (req, res) => {
     const { category } = req.params;
     try {
-        const products = await Product.findAll({include: {
+        const products = await Product.findAll({
+            order: ["price", "ASC"],
+            include: {
             model: Category,
             required: true,
             where: {
