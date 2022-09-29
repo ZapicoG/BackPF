@@ -4,7 +4,7 @@ const UserRoutes = require ('./UserRoutes.js');
 const ProductRoutes = require('./ProductRoutes.js');
 const CategoryRoutes = require("./CategoryRoutes.js");
 const ReviewRoutes = require("./ReviewRoutes.js");
-// const BulkRoutes = require("./BulkRoutes.js");
+const BulkRoutes = require("./BulkRoutes.js");
 
 
 
@@ -20,7 +20,7 @@ router.use('/user', UserRoutes)
 router.use('/product', ProductRoutes)
 router.use('/category', CategoryRoutes)
 router.use('/review', ReviewRoutes)
-// router.use('/bulk', BulkRoutes)
+router.use('/bulk', BulkRoutes)
 
 
 
