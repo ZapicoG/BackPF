@@ -81,7 +81,7 @@ router.get("/all", async (req, res) => {
     }
 });
 
-
+//Ruta a ser usada para el tema de paginado (sin filtros pero permite ordenar por precio ASC y DESC)
 
 router.get("/itemsPerPage", async (req, res) => {
     let { order, amount, page } = req.query;
@@ -89,7 +89,7 @@ router.get("/itemsPerPage", async (req, res) => {
     try {
         const products = await Product.findAll({
             order: [["price", order ? order : "ASC"]],
-            offset: (page * amount),
+            offset: page * amount,
             limit: amount,
             include: Category});
         res.send(products)
@@ -99,7 +99,7 @@ router.get("/itemsPerPage", async (req, res) => {
 });
 
 
-
+//Ruta para filtrar (y ordenar por precio ASC y DESC)
 
 router.get("/filterBy", async (req, res) => {
     let { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
@@ -109,11 +109,11 @@ router.get("/filterBy", async (req, res) => {
     try {
         const products = await Product.findAll({
             order: [["price", order? order : "ASC"]],
-            offSet: page * amount,
+            offset: page * amount,
             limit: amount,
             where: {
-                brand: brand,
-                model: model,
+                brand: brand ? brand : {[Op.not] : null},
+                model: model ? model : {[Op.not] : null},
                 price: {[Op.between]: [minPrice, maxPrice]}
 
             },
