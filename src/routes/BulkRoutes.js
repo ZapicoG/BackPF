@@ -52,6 +52,7 @@ router.post("/products", async (req, res) => {
             if (categories) {
                 for (let category of categories) {
                     let addCategory = await Category.findOrCreate({where: {name: category}})
+                    console.log(3, addCategory)
                     if (addCategory !== true) await newProduct.addCategory(addCategory)
                 }
         }}
