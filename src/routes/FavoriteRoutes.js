@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { Op } = require("sequelize")
 const axios = require("axios");
-const { User, Cart, Category, Color, Image, Order, Product, Review, conn, ProductCategory} = require('../db'); 
+const { User, Cart, Category, Color, Image, Order, Product, Favorite, Review, conn, ProductCategory} = require('../db'); 
 const router = Router();
 module.exports = router;
 
@@ -9,7 +9,7 @@ module.exports = router;
 router.get("/", async (req, res) => {
     const { userName } = req.body;
     try {
-        const favorites = await models.Favorite.findAll({
+        const favorites = await Favorite.findAll({
             where: {
                 userName: userName
             },
