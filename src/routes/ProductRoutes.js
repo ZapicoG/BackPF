@@ -91,7 +91,10 @@ router.get("/itemsPerPage", async (req, res) => {
             order: [["price", order ? order : "ASC"]],
             offset: page * amount,
             limit: amount,
-            include: Category});
+            include: {
+                model:Category,
+                through: { attributes: [] }
+            }});
         res.send(products)
     } catch (err) {
         res.status(500).send({error: err.message})
