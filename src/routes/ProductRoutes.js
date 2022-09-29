@@ -80,8 +80,10 @@ router.get("/all", async (req, res) => {
     }
 });
 
+
+
 router.get("/itemsPerPage", async (req, res) => {
-    const { order, amount, page } = req.query;
+    let { order, amount, page } = req.query;
     if (!amount) amount = 10;
     try {
         const products = await Product.findAll({
@@ -96,8 +98,10 @@ router.get("/itemsPerPage", async (req, res) => {
 });
 
 
+
+
 router.get("/filterBy", async (req, res) => {
-    const { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
+    let { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
     if (!amount) amount = 10;
     if (!minPrice) minPrice = 0;
     if (!maxPrice) maxPrice = Infinity;
