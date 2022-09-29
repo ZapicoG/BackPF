@@ -9,10 +9,11 @@ const router = Router();
 
 
 router.post("/create", async (req, res) => {
-    const { name, model, brand, description, thumbnail, price, categories } = req.body;
+    const { id, name, model, brand, description, thumbnail, price, categories } = req.body;
     // console.log(req.body);   
     try {
         const newProduct = await Product.create({
+            id: id ? id : null,
             name,
             model,
             brand,
