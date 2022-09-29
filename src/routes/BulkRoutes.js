@@ -39,8 +39,22 @@ router.post("/products", async (req, res) => {
     const { products } = req.body;
 
     try {
-        // console.log(users)
-        await Product.bulkCreate(products)
+        for (let product of products) {
+            const { name, model, brand, description, thumbnail, price, categories } = product;
+            const newProduct = await Product.create({
+                name,
+                model,
+                brand,
+                description,
+                thumbnail,
+                price     
+            }) 
+            if (categories) {
+                for (let category of categories) {
+                    let addCategory = await Category.findOrCreate({where: {name: category}})
+                    await newProduct.addCategory(addCategory)
+                }
+        }}
         res.send("Products created")
     } catch (err) {
         res.status(500).send({error: err.message})
