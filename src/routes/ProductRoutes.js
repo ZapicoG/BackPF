@@ -113,19 +113,22 @@ router.get("/filterBy", async (req, res) => {
         const products = await Product.findAll({
             order: [["price", order? order : "ASC"]],
             offset: page * amount,
-            limit: amount,
-            include: {
-                // where: (category ? {name : category} : {}),
-                model: Category,
-                as: "categories",
-                through: { attributes: [] }
-            },
+            limit: amount, 
             where: {
                 brand: {[Op.like]: `%${brand}%`},
                 model: {[Op.like]: `%${model}%`},
-                price: {[Op.between]: [minPrice, maxPrice]},
-                ...(category ? {'$Category.name$': category} : {})
-            },});
+                price: {[Op.between]: [minPrice, maxPrice]}
+                // ...(category ? {'$Category.name$': category} : {})
+            },
+            ...(category ? 
+                {include: {
+                    // where: (category ? {name : category} : {}),
+                    model: Category,
+                    through: { attributes: [] },
+                    where : {name: category}
+                }} : {}
+                )
+        });
         res.send(products);
     } catch (err) {
         res.status(500).send({error: err.message})
