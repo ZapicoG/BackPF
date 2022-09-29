@@ -7,14 +7,14 @@ module.exports = router;
 
 
 
-// Ruta:./bulk/user
+// Ruta:./bulk/users
 // Nombre:
 // Input
 // Descricion:
 // Output:
 
 
-router.post("/user", async (req, res) => {
+router.post("/users", async (req, res) => {
     const { users } = req.body;
 
     try {
