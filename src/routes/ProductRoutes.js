@@ -112,16 +112,15 @@ router.get("/filterBy", async (req, res) => {
             offset: page * amount,
             limit: amount,
             where: {
-                brand: brand ? brand : {[Op.not] : null},
-                model: model ? model : {[Op.not] : null}
+                ...(brand ? brand : {}),
+                ...(model ? model : {})
+   
                 // price: {[Op.between]: [minPrice, maxPrice]}
             },
             include: {
             model: Category,
             required: true,
-            where: {
-                name: category 
-            },
+            where: (category ? {name : category} : {}),
             through: { attributes: []}
         }});
         res.send(products);
