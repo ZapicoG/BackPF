@@ -9,7 +9,7 @@ const router = Router();
 
 
 router.post("/create", async (req, res) => {
-    const { name, model, brand, description, thumbnail, price, categories } = req.body;
+    const { name, model, brand, description, thumbnail, price, condition, categories } = req.body;
     // console.log(req.body);   
     try {
         const newProduct = await Product.create({
@@ -18,7 +18,8 @@ router.post("/create", async (req, res) => {
             brand,
             description,
             thumbnail,
-            price     
+            price,
+            condition     
     }) 
     if (categories) {
         // console.log(1, newProduct, categories)
