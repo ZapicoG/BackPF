@@ -9,11 +9,10 @@ const router = Router();
 
 
 router.post("/create", async (req, res) => {
-    const { id, name, model, brand, description, thumbnail, price, categories } = req.body;
+    const { name, model, brand, description, thumbnail, price, categories } = req.body;
     // console.log(req.body);   
     try {
         const newProduct = await Product.create({
-            id: id ? id : null,
             name,
             model,
             brand,
@@ -85,7 +84,7 @@ router.get("/byCategory/:category", async (req, res) => {
     const { category } = req.params;
     try {
         const products = await Product.findAll({
-            order: ["price", "ASC"],
+            order: [["price", "ASC"]],
             include: {
             model: Category,
             required: true,
