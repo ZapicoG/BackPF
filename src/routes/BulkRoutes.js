@@ -40,7 +40,7 @@ router.post("/products", async (req, res) => {
 
     try {
         // console.log(users)
-        await User.bulkCreate(products)
+        await Product.bulkCreate(products)
         res.send("Products created")
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -61,7 +61,7 @@ router.post("/categories", async (req, res) => {
 
     try {
         console.log(categories)
-        await User.bulkCreate(categories)
+        await Category.bulkCreate(categories)
         res.send("Categories created")
     } catch (err) {
         res.status(500).send({error: err.message})
