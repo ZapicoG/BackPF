@@ -53,6 +53,9 @@ Color.belongsTo(Product)
 Product.hasMany(Image)
 Image.belongsTo(Product)
 
+Product.belongsToMany(User, {through: "Favorite", timestamps: false} )
+User.belongsToMany(Product, {through: "Favorite", timestamps: false} )
+
 
 
 //Relaciones muchos a muchos avanzadas
