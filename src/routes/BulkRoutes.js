@@ -37,7 +37,8 @@ router.post("/users", async (req, res) => {
 
 router.post("/products", async (req, res) => {
     const { products } = req.body;
-
+    console.log(1, req.body)
+    console.log(2, products)
     try {
         for (let product of products) {
             const { name, model, brand, description, thumbnail, price, categories } = product;
