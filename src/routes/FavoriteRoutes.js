@@ -9,12 +9,15 @@ module.exports = router;
 router.get("/", async (req, res) => {
     const { userName } = req.body;
     try {
-        const favorites = await Favorite.findAll({
+        const favorites = await Product.findAll({
+            through: {
+                model: Favorite
+            },
             where: {
                 userName: userName
             },
             include: {
-                model: Product,
+                model: User,
                 through: { attributes: [] }
             }
         })
