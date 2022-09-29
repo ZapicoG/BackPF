@@ -89,7 +89,7 @@ router.get("/itemsPerPage", async (req, res) => {
     try {
         const products = await Product.findAll({
             order: [["price", order ? order : "ASC"]],
-            offSet: page * amount,
+            offSet: (page * amount),
             limit: amount,
             include: Category});
         res.send(products)
