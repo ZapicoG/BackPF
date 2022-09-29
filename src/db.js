@@ -53,12 +53,24 @@ Color.belongsTo(Product)
 Product.hasMany(Image)
 Image.belongsTo(Product)
 
-Product.belongsToMany(User, {through: Favorite})
-User.belongsToMany(Product, {through: Favorite})
 
 
 
 //Relaciones muchos a muchos avanzadas
+
+Product.belongsToMany(User, {
+  through: Favorite,
+  foreignKey: "productId",
+  otherKey: "userName"
+})
+User.belongsToMany(Product, {
+  through: Favorite,
+  foreignKey: "userName",
+  otherKey: "productId"
+})
+
+
+
 
 User.belongsToMany(Product, {
   through: Review,
