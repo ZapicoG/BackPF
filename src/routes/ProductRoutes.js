@@ -117,12 +117,12 @@ router.get("/filterBy", async (req, res) => {
    
                 // price: {[Op.between]: [minPrice, maxPrice]}
             },
-            include: {
-            model: Category,
-            required: true,
-            where: (category ? {name : category} : {}),
-            through: { attributes: []}
-        }});
+            // include: {
+            // model: Category,
+            // required: true,
+            // where: (category ? {name : category} : {}),
+            // through: { attributes: [] }
+    });
         res.send(products);
     } catch (err) {
         res.status(500).send({error: err.message})
