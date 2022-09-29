@@ -120,7 +120,7 @@ router.get("/filterBy", async (req, res) => {
             model: Category,
             required: true,
             where: {
-                name: category ? category :{[Op.not] : "Unknown"}
+                name: category 
             },
             through: { attributes: []}
         }});
