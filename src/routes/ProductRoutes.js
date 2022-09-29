@@ -104,6 +104,9 @@ router.get("/itemsPerPage", async (req, res) => {
 router.get("/filterBy", async (req, res) => {
     let { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
     if (!amount) amount = 10;
+    if (!category) category = {};
+    if (!brand) brand = "";
+    if (!model) model = "";
     if (!minPrice) minPrice = 0;
     if (!maxPrice) maxPrice = 100000000000;
     try {
@@ -112,11 +115,12 @@ router.get("/filterBy", async (req, res) => {
             offset: page * amount,
             limit: amount,
             where: {
-                condition: {[Op.not]: "new"},
-                ...(brand ? {brand: brand} : {}),
-                ...(model ? {model: model} : {})
-   
-                // price: {[Op.between]: [minPrice, maxPrice]}
+                brand: {[Op.like]: `%${brand}%`},
+                model: {[Op.like]: `%${model}%`},
+                price: {
+                    [Op.between]: [minPrice, maxPrice]
+                }
+
             },
             // include: {
             // model: Category,
