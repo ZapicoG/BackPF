@@ -81,11 +81,14 @@ router.get("/all", async (req, res) => {
     }
 });
 
+
 //Ruta a ser usada para el tema de paginado (sin filtros pero permite ordenar por precio ASC y DESC)
+
 
 router.get("/itemsPerPage", async (req, res) => {
     let { order, amount, page } = req.query;
     if (!amount) amount = 10;
+
     try {
         const products = await Product.findAll({
             order: [["price", order ? order : "ASC"]],
@@ -117,6 +120,7 @@ router.get("/filterBy", async (req, res) => {
             order: [["price", order? order : "ASC"]],
             offset: page * amount,
             limit: amount, 
+
             where: {
                 brand: {[Op.like]: `%${brand}%`},
                 model: {[Op.like]: `%${model}%`},
