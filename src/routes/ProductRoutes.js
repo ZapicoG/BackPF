@@ -113,15 +113,14 @@ router.get("/filterBy", async (req, res) => {
             limit: amount,
             where: {
                 brand: brand ? brand : {[Op.not] : null},
-                model: model ? model : {[Op.not] : null},
-                price: {[Op.between]: [minPrice, maxPrice]}
-
+                model: model ? model : {[Op.not] : null}
+                // price: {[Op.between]: [minPrice, maxPrice]}
             },
             include: {
             model: Category,
             required: true,
             where: {
-                name: category
+                name: category ? category :{[Op.not] : "Unknown"}
             },
             through: { attributes: []}
         }});
