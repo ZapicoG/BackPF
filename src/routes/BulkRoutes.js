@@ -39,7 +39,7 @@ router.post("/products", async (req, res) => {
     const { products } = req.body;
     try {
         for (let product of products) {
-            const { name, model, brand, description, thumbnail, price, categories } = product;
+            const { name, model, brand, description, thumbnail, price, condition, categories } = product;
             const newProduct = await Product.findOrCreate({
                 name,
                 model,
