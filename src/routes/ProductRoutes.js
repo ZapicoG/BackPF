@@ -24,7 +24,7 @@ router.post("/create", async (req, res) => {
         // console.log(1, newProduct, categories)
         for (let category of categories) {
             // console.log(2, newProduct, category)
-            let addCategory = await Category.findOne({where: {name: category}})
+            let addCategory = await Category.findOrCreate({where: {name: category}})
             // console.log(3, addCategory)
             await newProduct.addCategory(addCategory)
             // console.log(4, newProduct)
