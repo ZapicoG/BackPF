@@ -121,7 +121,7 @@ router.get("/filterBy", async (req, res) => {
             },
             include: {
             model: Category,
-            where: (category ? {name : category} : {}),
+            // where: (category ? {name : category} : {}),
             through: { attributes: [] }
     }});
         res.send(products);
