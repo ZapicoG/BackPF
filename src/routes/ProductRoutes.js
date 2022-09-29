@@ -80,11 +80,38 @@ router.get("/all", async (req, res) => {
     }
 });
 
-router.get("/byCategory/:category", async (req, res) => {
-    const { category } = req.params;
+router.get("/itemsPerPage", async (req, res) => {
+    const { order, amount, page } = req.query;
+    if (!amount) amount = 10;
     try {
         const products = await Product.findAll({
-            order: [["price", "ASC"]],
+            order: [["price", order ? order : "ASC"]],
+            offSet: page * amount,
+            limit: amount,
+            include: Category});
+        res.send(products)
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+});
+
+
+router.get("/filterBy", async (req, res) => {
+    const { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
+    if (!amount) amount = 10;
+    if (!minPrice) minPrice = 0;
+    if (!maxPrice) maxPrice = Infinity;
+    try {
+        const products = await Product.findAll({
+            order: [["price", order? order : "ASC"]],
+            offSet: page * amount,
+            limit: amount,
+            where: {
+                brand: brand,
+                model: model,
+                price: {[Op.between]: [minPrice, maxPrice]}
+
+            },
             include: {
             model: Category,
             required: true,
