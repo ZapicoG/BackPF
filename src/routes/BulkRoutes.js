@@ -52,7 +52,7 @@ router.post("/products", async (req, res) => {
             if (categories) {
                 for (let category of categories) {
                     let addCategory = await Category.findOrCreate({where: {name: category}})
-                    console.log(3, addCategory[0])
+                    // console.log(3, addCategory[0])
                     if (addCategory !== true) await newProduct.addCategory(addCategory[0])
                 }
         }}
@@ -75,7 +75,7 @@ router.post("/categories", async (req, res) => {
     const { categories } = req.body;
 
     try {
-        console.log(categories)
+        // console.log(categories)
         await Category.bulkCreate(categories)
         res.send("Categories created")
     } catch (err) {
