@@ -11,6 +11,7 @@ router.post("/user", async (req, res) => {
     const { users } = req.body;
 
     try {
+        console.log(users)
         await User.bulkCreate(users)
         res.send("Users created")
     } catch (err) {
