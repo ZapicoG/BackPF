@@ -112,6 +112,7 @@ router.get("/filterBy", async (req, res) => {
             offset: page * amount,
             limit: amount,
             where: {
+                condition: {[Op.not]: "new"},
                 ...(brand ? {brand: brand} : {}),
                 ...(model ? {model: model} : {})
    
