@@ -7,6 +7,13 @@ module.exports = router;
 
 
 
+// Ruta:./bulk/user
+// Nombre:
+// Input
+// Descricion:
+// Output:
+
+
 router.post("/user", async (req, res) => {
     const { users } = req.body;
 
@@ -19,6 +26,14 @@ router.post("/user", async (req, res) => {
     }
 });
 
+
+
+
+// Ruta:./bulk/products
+// Nombre:
+// Input
+// Descricion:
+// Output:
 
 router.post("/products", async (req, res) => {
     const { products } = req.body;
@@ -33,6 +48,14 @@ router.post("/products", async (req, res) => {
 });
 
 
+
+// Ruta:./bulk/categories
+// Nombre:
+// Input
+// Descricion:
+// Output:
+
+
 router.post("/categories", async (req, res) => {
     const { categories } = req.body;
 
@@ -40,6 +63,32 @@ router.post("/categories", async (req, res) => {
         console.log(categories)
         await User.bulkCreate(categories)
         res.send("Categories created")
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+});
+
+
+// Ruta:./bulk/reviews
+// Nombre:
+// Input
+// Descricion:
+// Output:
+
+
+router.post("/reviews", async (req, res) => {
+    const { reviews } = req.body;
+    try {
+        // console.log(1, req.body)
+        for (let review of reviews) {
+            let { productId, userName, description, stars } = review
+            const user = await User.findByPk(userName);
+            const product = await Product.findByPk(productId);
+            // console.log(2, user, product)
+            await user.addProduct(product, { through: { description: description, stars: stars } })
+            // console.log(3)
+        }
+        res.send("Reviews added")
     } catch (err) {
         res.status(500).send({error: err.message})
     }

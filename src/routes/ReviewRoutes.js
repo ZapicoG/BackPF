@@ -63,7 +63,7 @@ router.put("/modify", async (req, res) => {
 router.put("/hideReview", async (req, res) => {
     const { productId, userName } = req.body;
     try {
-        const review = await Product.findOne({where: { productId: productId, userName: userName}});
+        const review = await Review.findOne({where: { productId: productId, userName: userName}});
         review.update({hidden: true});
         await review.save();
         res.send("Review hidden");
