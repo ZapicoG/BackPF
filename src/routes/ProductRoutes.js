@@ -112,8 +112,8 @@ router.get("/filterBy", async (req, res) => {
             offset: page * amount,
             limit: amount,
             where: {
-                ...(brand ? brand : {}),
-                ...(model ? model : {})
+                ...(brand ? {brand: brand} : {}),
+                ...(model ? {model: model} : {})
    
                 // price: {[Op.between]: [minPrice, maxPrice]}
             },
