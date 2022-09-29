@@ -117,14 +117,14 @@ router.get("/filterBy", async (req, res) => {
             include: {
                 // where: (category ? {name : category} : {}),
                 model: Category,
-                as: "Category",
+                // as: "Category",
                 through: { attributes: [] }
             },
             where: {
                 brand: {[Op.like]: `%${brand}%`},
                 model: {[Op.like]: `%${model}%`},
                 price: {[Op.between]: [minPrice, maxPrice]},
-                ...(category ? {'$Category.name$': category} : {})
+                ...(category ? {'$categories.name$': category} : {})
             },});
         res.send(products);
     } catch (err) {
