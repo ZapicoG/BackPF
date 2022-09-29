@@ -105,7 +105,6 @@ router.get("/filterBy", async (req, res) => {
     let { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
     if (!page) page = 0; 
     if (!amount) amount = 10;
-    if (!category) category = {};
     if (!brand) brand = "";
     if (!model) model = "";
     if (!minPrice) minPrice = 0;
