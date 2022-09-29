@@ -117,7 +117,7 @@ router.get("/filterBy", async (req, res) => {
             include: {
                 // where: (category ? {name : category} : {}),
                 model: Category,
-                // as: "Category",
+                as: "categories",
                 through: { attributes: [] }
             },
             where: {
