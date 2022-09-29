@@ -80,4 +80,4 @@ router.put("/hideReview", async (req, res) => {
 // Crear ruta para crear/agregar Review listo
 // Crear Ruta para obtener todas las reviews de un producto. listo
 // Crear ruta para Modificar Review listo
-// Crear Ruta para eliminar Review
+// Crear Ruta para ocultar review listo
