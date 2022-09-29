@@ -60,6 +60,7 @@ router.post("/products", async (req, res) => {
         }}
         res.send("Products created")
     } catch (err) {
+        console.log(err.message)
         res.status(500).send({error: err.message})
     }
 });
