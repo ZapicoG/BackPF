@@ -64,14 +64,12 @@ Image.belongsTo(Product)
 
 User.belongsToMany(Product, {
   through: Review,
-  as: "Review",
   foreignKey: "userName",
   otherKey: "productId"
 } )
 
 Product.belongsToMany(User, {
   through: Review,
-  as: "Review",
   foreignKey: "productId",
   otherKey: "userName"
 })
