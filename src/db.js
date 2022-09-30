@@ -60,26 +60,26 @@ Image.belongsTo(Product)
 
 User.belongsToMany(Product, {
   through: Review,
-  foreignKey: "userNameReview",
-  otherKey: "productIdReview"
+  foreignKey: "userName",
+  otherKey: "productId"
 } )
 Product.belongsToMany(User, {
   through: Review,
-  foreignKey: "productIdReview",
-  otherKey: "userNameReview"
+  foreignKey: "productId",
+  otherKey: "userName"
 })
 
 
 
 Product.belongsToMany(User, {
   through: Favorite,
-  foreignKey: "productIdFavorite",
-  otherKey: "userNameFavorite"
+  foreignKey: "productId",
+  otherKey: "userName"
 })
 User.belongsToMany(Product, {
   through: Favorite,
-  foreignKey: "userNameFavorite",
-  otherKey: "productIdFavorite"
+  foreignKey: "userName",
+  otherKey: "productId"
 })
 Product.hasMany(Favorite)
 Favorite.belongsTo(Product)
@@ -87,26 +87,26 @@ Favorite.belongsTo(Product)
 
 User.belongsToMany(Product, {
   through: Cart,
-  foreignKey: "productIdCart",
-  otherKey: "userNameCart"
+  foreignKey: "productId",
+  otherKey: "userName"
 })
 Product.belongsToMany(User, {
   through: Cart,
-  foreignKey: "productIdCart",
-  otherKey: "userNameCart"  
+  foreignKey: "productId",
+  otherKey: "userName"  
 })
 
 
 
 User.belongsToMany(Product, {
   through: Order,
-  foreignKey: "productIdOrder",
-  otherKey: "userNameOrder"
+  foreignKey: "productId",
+  otherKey: "userName"
 })
 Product.belongsToMany(User, {
   through: Order,
-  foreignKey: "productIdOrder",
-  otherKey: "userNameOrder"
+  foreignKey: "productId",
+  otherKey: "userName"
 })
 
 

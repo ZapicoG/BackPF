@@ -8,16 +8,16 @@ module.exports = router;
 
 
 router.post("/add", async (req, res) => {
-    const { productIdReview, userNameReview, description, stars } = req.body;
+    const { productId, userName, description, stars } = req.body;
     try {
         // console.log(1, req.body)
-        // const user = await User.findByPk(userNameReview);
-        // const product = await Product.findByPk(productIdReview);
+        // const user = await User.findByPk(userName);
+        // const product = await Product.findByPk(productId);
         // console.log(2, user, product)
         // await user.addProduct(product, {as: "Review", through: { description: description, stars: stars } })
         // console.log(3)
         // res.send("Review added")
-        const review = await Review.create({productIdReview, userNameReview, description, stars})
+        const review = await Review.create({productId, userName, description, stars})
         res.send(review)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -28,7 +28,7 @@ router.post("/add", async (req, res) => {
 router.get("/ID/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const reviews = await Review.findAll({ where: { productIdReview: id}})
+        const reviews = await Review.findAll({ where: { productId: id}})
         res.send(reviews);
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -46,13 +46,13 @@ router.get("/all", async (req, res) => {
 
 
 router.put("/modify", async (req, res) => {
-    const { productIdReview, userNameReview, description, stars } = req.body;
+    const { productId, userName, description, stars } = req.body;
     // console.log(req.body)
     try { 
         Review.update(
-            { userNameReview, productIdReview, description, stars},
+            { userName, productId, description, stars},
             {
-                where: {productIdReview: productIdReview, userNameReview: userNameReview}
+                where: {productId: productId, userName: userName}
             }
         )
         return res.send("Review modificada");
@@ -63,9 +63,9 @@ router.put("/modify", async (req, res) => {
 
 
 router.put("/hideReview", async (req, res) => {
-    const { productIdReview, userNameReview } = req.body;
+    const { productId, userName } = req.body;
     try {
-        const review = await Review.findOne({where: { productIdReview: productIdReview, userNameReview: userNameReview}});
+        const review = await Review.findOne({where: { productId: productId, userName: userName}});
         review.update({hidden: true});
         await review.save();
         res.send("Review hidden");

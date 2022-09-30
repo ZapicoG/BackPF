@@ -74,7 +74,15 @@ router.put("/hide", async (req, res) => {
 
 router.get("/all", async (req, res) => {
     try {
-        const products = await Product.findAll({include: Category});
+        const products = await Product.findAll({include: [{
+            model: Category,
+            through: { attributes: [] }
+        },
+        {
+            model: User,
+            through: { attributes: [] }
+        }
+    ]});
         res.send(products)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -91,10 +99,15 @@ router.get("/itemsPerPage", async (req, res) => {
             order: [["price", order ? order : "ASC"]],
             offset: page * amount,
             limit: amount,
-            include: {
-                model:Category,
+            include: [{
+                model: Category,
                 through: { attributes: [] }
-            }});
+            },
+            {
+                model: User,
+                through: { attributes: [] }
+            }
+        ]});
         res.send(products)
     } catch (err) {
         res.status(500).send({error: err.message})
