@@ -17,7 +17,7 @@ router.post("/add", async (req, res) => {
         // await user.addProduct(product, {as: "Review", through: { description: description, stars: stars } })
         // console.log(3)
         // res.send("Review added")
-        const review = Review.create({productIdReview, userNameReview, description, stars})
+        const review = await Review.create({productIdReview, userNameReview, description, stars})
         res.send(review)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -79,10 +79,12 @@ router.put("/hideReview", async (req, res) => {
 router.post('/orden', async(req, res) =>{
     const{ productIdOrder, userNameOrder, orderNumber, shippingAddress, status, amount} = req.body
     try {
-        const user = await User.findByPk(userNameOrder);
-        const product = await Product.findByPk(productIdOrder);
-        await user.addProduct(product, {through: { orderNumber: orderNumber, shippingAddress: shippingAddress, status: status, amount: amount } })
-        res.send(product);
+        // const user = await User.findByPk(userNameOrder);
+        // const product = await Product.findByPk(productIdOrder);
+        // await user.addProduct(product, {through: { orderNumber: orderNumber, shippingAddress: shippingAddress, status: status, amount: amount } })
+        // res.send(product);
+        const order = await Order.create({ orderNumber: orderNumber, shippingAddress: shippingAddress, status: status, amount: amount })
+        res.send(order)
     } catch (error) {
         console.log(error)
     }
