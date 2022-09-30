@@ -77,13 +77,13 @@ Product.belongsToMany(User, {
 
 Product.belongsToMany(User, {
   through: Favorite,
-  foreignKey: "productId",
-  otherKey: "userName"
+  foreignKey: "productIdFavorite",
+  otherKey: "userNameFavorite"
 })
 User.belongsToMany(Product, {
   through: Favorite,
-  foreignKey: "userName",
-  otherKey: "productId"
+  foreignKey: "userNameFavorite",
+  otherKey: "productIdFavorite"
 })
 
 
