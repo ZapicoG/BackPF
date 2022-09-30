@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     const { userName } = req.body;
     if (!userName) return res.send("Missing Username")
     try {
-        const favorites = await Product.findAll({include: User, where: {userName: userName}})
+        const favorites = await Product.findAll({include: User})
         res.send(favorites)
     } catch (err) {
         res.status(500).send({error: err.message})

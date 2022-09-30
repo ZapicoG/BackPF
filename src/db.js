@@ -77,6 +77,7 @@ User.belongsToMany(Product, {
   foreignKey: "userName",
   otherKey: "productId"
 } )
+
 Product.belongsToMany(User, {
   through: Review,
   foreignKey: "productId",
