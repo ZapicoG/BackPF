@@ -4,9 +4,9 @@ const { Op } = require("sequelize")
 const router = Router();
 const axios = require("axios");
 
-router.post('/create', async (req,res)=>{
+router.post('/', async (req,res)=>{
     const { role, userName, email, password, defaultShippingAddress, billingAddress } = req.body;
-    // console.log(req.body);
+    console.log(req.body);
     try{
         const newUser = await User.create({
             role,

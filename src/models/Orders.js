@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         status: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('Pending', 'Cancelled', 'InDelivery','Delivered'),
             allowNull: true
         },
         amount: {
@@ -21,6 +21,6 @@ module.exports = (sequelize) => {
 
     }, {
         timestamps: false
-      })
+    })
 
 }

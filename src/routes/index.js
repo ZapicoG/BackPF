@@ -1,12 +1,11 @@
 const { Router } = require('express');
-
 const UserRoutes = require ('./UserRoutes.js');
 const ProductRoutes = require('./ProductRoutes.js');
 const CategoryRoutes = require("./CategoryRoutes.js");
 const ReviewRoutes = require("./ReviewRoutes.js");
 const BulkRoutes = require("./BulkRoutes.js");
 const FavoriteRoutes = require("./FavoriteRoutes.js");
-
+const OrdersRoutes = require ('./OrderRoutes')
 
 
 const router = Router();
@@ -16,13 +15,14 @@ router.get("/", (req, res) => {
     res.send("Back Funcionando");
 })
 
-
 router.use('/user', UserRoutes)
 router.use('/product', ProductRoutes)
 router.use('/category', CategoryRoutes)
 router.use('/review', ReviewRoutes)
 router.use('/bulk', BulkRoutes)
 router.use('/favorite', FavoriteRoutes)
+router.use('/orders', OrdersRoutes)
+
 
 
 
@@ -66,7 +66,6 @@ router.use('/favorite', FavoriteRoutes)
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-
 
 
 
