@@ -14,7 +14,7 @@ router.post("/add", async (req, res) => {
         const user = await User.findByPk(userName);
         const product = await Product.findByPk(productId);
         console.log(2, user, product)
-        await user.addProduct(product, { through: { description: description, stars: stars } })
+        await user.addProduct(product, {as: "Review", through: { description: description, stars: stars } })
         console.log(3)
         res.send("Review added")
     } catch (err) {
@@ -79,7 +79,7 @@ router.post('/orden', async(req, res) =>{
     try {
         const user = await User.findByPk(userNameOrder);
         const product = await Product.findByPk(productIdOrder);
-        await user.addProduct(product, { through: { orderNumber: orderNumber, shippingAddress: shippingAddress, status: status, amount: amount } })
+        await user.addProduct(product, {through: { orderNumber: orderNumber, shippingAddress: shippingAddress, status: status, amount: amount } })
         res.send(product);
     } catch (error) {
         console.log(error)
