@@ -28,7 +28,7 @@ router.post("/add", async (req, res) => {
 router.get("/ID/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const reviews = await Review.findAll({ where: { productId: id}})
+        const reviews = await Review.findAll({ where: { productIdReview: id}})
         res.send(reviews);
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -46,13 +46,13 @@ router.get("/all", async (req, res) => {
 
 
 router.put("/modify", async (req, res) => {
-    const { productId, userName, description, stars } = req.body;
+    const { productIdReview, userNameReview, description, stars } = req.body;
     // console.log(req.body)
     try { 
         Review.update(
-            { userName, productId, description, stars},
+            { userNameReview, productIdReview, description, stars},
             {
-                where: {productId: productId, userName: userName}
+                where: {productIdReview: productIdReview, userNameReview: userNameReview}
             }
         )
         return res.send("Review modificada");
@@ -63,9 +63,9 @@ router.put("/modify", async (req, res) => {
 
 
 router.put("/hideReview", async (req, res) => {
-    const { productId, userName } = req.body;
+    const { productIdReview, userNameReview } = req.body;
     try {
-        const review = await Review.findOne({where: { productId: productId, userName: userName}});
+        const review = await Review.findOne({where: { productIdReview: productIdReview, userNameReview: userNameReview}});
         review.update({hidden: true});
         await review.save();
         res.send("Review hidden");
@@ -76,19 +76,6 @@ router.put("/hideReview", async (req, res) => {
 
 
 
-router.post('/orden', async(req, res) =>{
-    const{ productIdOrder, userNameOrder, orderNumber, shippingAddress, status, amount} = req.body
-    try {
-        // const user = await User.findByPk(userNameOrder);
-        // const product = await Product.findByPk(productIdOrder);
-        // await user.addProduct(product, {through: { orderNumber: orderNumber, shippingAddress: shippingAddress, status: status, amount: amount } })
-        // res.send(product);
-        const order = await Order.create({ orderNumber: orderNumber, shippingAddress: shippingAddress, status: status, amount: amount })
-        res.send(order)
-    } catch (error) {
-        console.log(error)
-    }
-});
 
 
 

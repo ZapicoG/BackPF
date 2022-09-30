@@ -58,21 +58,17 @@ Image.belongsTo(Product)
 
 //Relaciones muchos a muchos avanzadas
 
-
-
-
-
 User.belongsToMany(Product, {
   through: Review,
   foreignKey: "userNameReview",
   otherKey: "productIdReview"
 } )
-
 Product.belongsToMany(User, {
   through: Review,
   foreignKey: "productIdReview",
   otherKey: "userNameReview"
 })
+
 
 
 Product.belongsToMany(User, {
@@ -85,7 +81,6 @@ User.belongsToMany(Product, {
   foreignKey: "userNameFavorite",
   otherKey: "productIdFavorite"
 })
-
 
 
 
