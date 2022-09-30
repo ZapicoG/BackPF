@@ -7,10 +7,10 @@ module.exports = router;
 
 
 router.get("/", async (req, res) => {
-    const { userNameFavorite } = req.body;
-    if (!userNameFavorite) return res.send("Missing Username")
+    const { userName } = req.body;
+    if (!userName) return res.send("Missing Username")
     try {
-        const favorites = await Favorite.findAll({where: {userNameFavorite}, include: Product})
+        const favorites = await Favorite.findAll({where: {userName}, include: Product})
         res.send(favorites)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -18,9 +18,9 @@ router.get("/", async (req, res) => {
 })
 
 router.post("/add", async (req, res) => {
-    const { userNameFavorite, productIdFavorite } = req.body;
+    const { userName, productId } = req.body;
     try {
-        const favorite = await Favorite.create({userNameFavorite, productIdFavorite});
+        const favorite = await Favorite.create({userName, productId});
         res.send(favorite)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -28,9 +28,9 @@ router.post("/add", async (req, res) => {
 })
 
 router.delete("/delete", async (req, res) => {
-    const { userNameFavorite, productIdFavorite } = req.body;
+    const { userName, productId } = req.body;
     try {
-        const favorite = await Favorite.findOne({userNameFavorite, productIdFavorite});
+        const favorite = await Favorite.findOne({userName, productId});
         favorite.destroy()
         res.send("Eliminated")
     } catch (err) {
