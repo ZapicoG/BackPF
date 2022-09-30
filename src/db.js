@@ -81,7 +81,8 @@ User.belongsToMany(Product, {
   foreignKey: "userNameFavorite",
   otherKey: "productIdFavorite"
 })
-
+Product.hasMany(Favorite)
+Favorite.belongsTo(Product)
 
 
 User.belongsToMany(Product, {
