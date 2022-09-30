@@ -74,6 +74,20 @@ router.put("/hideReview", async (req, res) => {
 
 
 
+router.post('/orden', async(req, res) =>{
+    const{ productIdOrder, userNameOrder, shippingAddress, status, amount} = req.body
+    try {
+        const user = await User.findByPk(userNameOrder);
+        const product = await Product.findByPk(productIdOrder);
+        await user.addProduct(product, { through: { shippingAddress: shippingAddress, status: status, amount: amount } })
+        res.send(product);
+    } catch (error) {
+        console.log(error)
+    }
+});
+
+
+
 
 
 

@@ -64,14 +64,14 @@ Image.belongsTo(Product)
 
 User.belongsToMany(Product, {
   through: Review,
-  foreignKey: "userName",
-  otherKey: "productId"
+  foreignKey: "userNameReview",
+  otherKey: "productIdReview"
 } )
 
 Product.belongsToMany(User, {
   through: Review,
-  foreignKey: "productId",
-  otherKey: "userName"
+  foreignKey: "productIdReview",
+  otherKey: "userNameReview"
 })
 
 
@@ -104,15 +104,13 @@ Product.belongsToMany(User, {
 
 User.belongsToMany(Product, {
   through: Order,
-  as: "Order",
-  foreignKey: "productId",
-  otherKey: "userName"
+  foreignKey: "productIdOrder",
+  otherKey: "userNameOrder"
 })
 Product.belongsToMany(User, {
   through: Order,
-  as: "Order",
-  foreignKey: "productId",
-  otherKey: "userName"
+  foreignKey: "productIdOrder",
+  otherKey: "userNameOrder"
 })
 
 
