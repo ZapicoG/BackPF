@@ -8,11 +8,11 @@ module.exports = router;
 
 
 router.post("/add", async (req, res) => {
-    const { productId, userName, description, stars } = req.body;
+    const { productIdReview, userNameReview, description, stars } = req.body;
     try {
         console.log(1, req.body)
-        const user = await User.findByPk(userName);
-        const product = await Product.findByPk(productId);
+        const user = await User.findByPk(userNameReview);
+        const product = await Product.findByPk(productIdReview);
         console.log(2, user, product)
         await user.addProduct(product, {as: "Review", through: { description: description, stars: stars } })
         console.log(3)
