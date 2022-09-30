@@ -10,13 +10,15 @@ module.exports = router;
 router.post("/add", async (req, res) => {
     const { productIdReview, userNameReview, description, stars } = req.body;
     try {
-        console.log(1, req.body)
-        const user = await User.findByPk(userNameReview);
-        const product = await Product.findByPk(productIdReview);
-        console.log(2, user, product)
-        await user.addProduct(product, {as: "Review", through: { description: description, stars: stars } })
-        console.log(3)
-        res.send("Review added")
+        // console.log(1, req.body)
+        // const user = await User.findByPk(userNameReview);
+        // const product = await Product.findByPk(productIdReview);
+        // console.log(2, user, product)
+        // await user.addProduct(product, {as: "Review", through: { description: description, stars: stars } })
+        // console.log(3)
+        // res.send("Review added")
+        const review = Review.create({productIdReview, userNameReview, description, stars})
+        res.send(review)
     } catch (err) {
         res.status(500).send({error: err.message})
     }
