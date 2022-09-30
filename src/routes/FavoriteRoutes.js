@@ -10,16 +10,16 @@ router.get("/", async (req, res) => {
     const { userName } = req.body;
     if (!userName) return res.send("Missing Username")
     try {
-        const favorites = await Product.findAll({
-            through: {
-                model: Favorite
-            },
+        const favorites = await User.findAll({
+            // through: {
+            //     model: Favorite
+            // },
             where: {
                 userName: userName
             },
             include: {
-                model: User,
-                through: { attributes: [] }
+                model: Product,
+                through: { model: Favorite}
             }
         })
         res.send(favorites)
