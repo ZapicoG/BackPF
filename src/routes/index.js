@@ -5,7 +5,7 @@ const OrdersRoutes = require ('./OrderRoutes')
 const CategoryRoutes = require ('./CategoryRoutes')
 const ReviewRoutes = require ('./ReviewRoutes')
 const BulkRoutes = require('./BulkRoutes')
-
+const TokenCheck = require('./TokenCheck');
 const router = Router();
 
 
@@ -19,6 +19,7 @@ router.use('/category', CategoryRoutes)
 router.use('/review', ReviewRoutes)
 router.use('/bulk', BulkRoutes)
 router.use('/orders', OrdersRoutes)
+router.use('/token', TokenCheck)
 
 
 
