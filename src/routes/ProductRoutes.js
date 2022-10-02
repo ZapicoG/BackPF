@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { Op } = require("sequelize")
 const axios = require("axios");
 const { User, Cart, Category, Color, Image, Order, Product, Review, conn, ProductCategory} = require('../db'); 
+const { getApiCellphones, getApiComputers } = require("../controllers/controllersApi.js")
 
 
 const router = Router();
@@ -21,15 +22,12 @@ router.post("/create", async (req, res) => {
             price,
             condition     
     }) 
-    if (categories) {
-        // console.log(1, newProduct, categories)
-        for (let category of categories) {
-            // console.log(2, newProduct, category)
-            let addCategory = await Category.findOrCreate({where: {name: category}})
-            // console.log(3, addCategory[0])
-            if (addCategory !== true) await newProduct.addCategory(addCategory[0])
-            // console.log(4, newProduct)
-        }
+    if (categories.length /* Si el arreglo tiene algo */) {
+    // categories va a ser un array con categorias. En el front va a haber un select con
+    // las categorias y se van a ir agregando al arreglo. Si me llegara a faltar una categoria,
+    // para eso esta la ruta de categorias.
+
+       await newProduct.setCategories(categories)
     } 
     res.send(newProduct);
 } catch (err) {
@@ -71,10 +69,30 @@ router.put("/hide", async (req, res) => {
     }
 });
 
+router.get("/Api", async (req, res) => {
+    try {
+        await getApiCellphones();
+        await getApiComputers();
+        return res.status(200)
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+});
 
 router.get("/all", async (req, res) => {
+    const { admin } = req.body;
     try {
-        const products = await Product.findAll({include: Category});
+        const products = await Product.findAll({
+            ...(admin ? {
+                include: [{
+                    model: Category,
+                    through: { attributes: [] }
+                }
+            ]
+            } : {
+                attributes: ["name"],
+                where: {hidden: false}
+            })});
         res.send(products)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -82,16 +100,47 @@ router.get("/all", async (req, res) => {
 });
 
 
+router.get("/allBrandAndModel", async (req, res) => {
 
+    try {
+        const brands = await Product.findAll({
+            attributes: ["brand"],
+            group: ["brand"],
+            where: {hidden: false}
+        });
+        const models = await Product.findAll({
+            attributes: ["model"],
+            group: ["model"],
+            where: {hidden: false}
+        })
+        res.send({brands, models})
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+});
+
+
+//Ruta a ser usada para el tema de paginado (sin filtros pero permite ordenar por precio ASC y DESC)
+// ASC DESC // amount es la cantidad de productos que queres que te pase // page en que pagina estas
 router.get("/itemsPerPage", async (req, res) => {
     let { order, amount, page } = req.query;
+    if (!page) page = 0;
     if (!amount) amount = 10;
     try {
-        const products = await Product.findAll({
+        const products = await Product.findAndCountAll({
+            where: {hidden: false},
             order: [["price", order ? order : "ASC"]],
-            offSet: page * amount,
+            offset: page * amount,
             limit: amount,
-            include: Category});
+            include: [{
+                model: Category,
+                through: { attributes: [] }
+            },
+            {
+                model: User,
+                through: { attributes: [] }
+            }
+        ]});
         res.send(products)
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -101,30 +150,40 @@ router.get("/itemsPerPage", async (req, res) => {
 
 
 
-router.get("/filterBy", async (req, res) => {
-    let { category, brand, model, minPrice, maxPrice, order, amount, page } = req.query;
-    if (!amount) amount = 10;
-    if (!minPrice) minPrice = 0;
-    if (!maxPrice) maxPrice = Infinity;
-    try {
-        const products = await Product.findAll({
-            order: [["price", order? order : "ASC"]],
-            offSet: page * amount,
-            limit: amount,
-            where: {
-                brand: brand,
-                model: model,
-                price: {[Op.between]: [minPrice, maxPrice]}
+//Ruta para filtrar (y ordenar por precio ASC y DESC)
 
-            },
-            include: {
-            model: Category,
-            required: true,
+router.get("/filterBy", async (req, res) => {
+    let { category, brand, model, minPrice, maxPrice, search, order, amount, page } = req.query;
+    // console.log(req.query)
+    if (!page) page = 0; 
+    if (!amount) amount = 10;
+    if (!brand) brand = "";
+    if (!model) model = "";
+    if (!search) search = "";
+    if (!minPrice) minPrice = 0;
+    if (!maxPrice) maxPrice = 2147483647; // Max integer value
+    try {
+        const products = await Product.findAndCountAll({
+            order: [["price", order? order : "ASC"]],
+            offset: page * amount,
+            limit: amount, 
             where: {
-                name: category
+                hidden: false,
+                brand: {[Op.iLike]: `%${brand}%`},
+                model: {[Op.iLike]: `%${model}%`},
+                name: {[Op.iLike]: `%${search}%`},
+                price: {[Op.between]: [minPrice, maxPrice]}
+                // ...(category ? {'$Category.name$': category} : {})
             },
-            through: { attributes: []}
-        }});
+            ...(category ? 
+                {include: {
+                    // where: (category ? {name : category} : {}),
+                    model: Category,
+                    through: { attributes: [] },
+                    where : {name: {[Op.iLike]: category}}
+                }} : {}
+                )
+        });
         res.send(products);
     } catch (err) {
         res.status(500).send({error: err.message})
@@ -134,7 +193,7 @@ router.get("/filterBy", async (req, res) => {
 router.get("/ID/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const product = await Product.findByPk(id, {include: {model: Category, through: { attributes: []}}})
+        const product = await conn.models.Product.findByPk(id, {include: {model: Category, through: { attributes: []}}})
         res.send(product)
     } catch (err) {
         res.status(500).send({error: err.message})
