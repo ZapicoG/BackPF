@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 
 router.post('/signup', async (req,res)=>{
-    const { userName, password, role, email, defaultShippingAddress, billingAddress  } = req.body;
+    const { userName, password, email, defaultShippingAddress, billingAddress, role } = req.body;
     const user = await User.findOne({
     where: {
         userName: userName 
